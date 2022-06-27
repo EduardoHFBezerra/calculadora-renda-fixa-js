@@ -23,15 +23,15 @@
       </div>
       <div class="form-group">
         <input type="text" class="form-control item" id="aporte-inicial" onKeyUp="mascararCampoMoeda(this)"
-          placeholder="Valor de aporte inicial">
+          placeholder="Valor de aporte inicial 0,00">
       </div>
       <div class="form-group">
         <input type="text" class="form-control item" id="aporte-mensal" onKeyUp="mascararCampoMoeda(this)"
-          placeholder="Valor de aporte mensal">
+          placeholder="Valor de aporte mensal 0,00">
       </div>
       <div class="form-group">
         <input type="text" class="form-control item" id="juros-mes" onKeyUp="mascararCampoJuros(this)"
-          placeholder="Taxa de juros ao mês">
+          placeholder="Taxa de juros ao mês %">
       </div>
       <div class="form-group">
         <input type="text" class="form-control item" id="periodo-ano" placeholder="Período em anos">
@@ -168,7 +168,7 @@
 
       document.getElementById('valorGanhoBruto').innerText = formatarMoeda(valorGanhoBruto)
       document.getElementById('valorGanhoLiquido').innerText = formatarMoeda(valorGanhoLiquido)
-      document.getElementById('imposto').innerText = `${(1 - imposto).toFixed(2)}% <-> ${formatarMoeda((1 - imposto) * valorGanhoBruto)}`
+      document.getElementById('imposto').innerText = `${(1 - imposto).toFixed(2)}% <-> ${(1 - imposto) * valorGanhoBruto}`
 
       document.getElementById('valorFuturoFinal').innerText = formatarMoeda(valorFuturo)
       document.getElementById('totalAplicado').innerText = formatarMoeda(totalAplicado)
