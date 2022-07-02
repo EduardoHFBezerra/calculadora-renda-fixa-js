@@ -168,7 +168,7 @@
 
       document.getElementById('valorGanhoBruto').innerText = formatarMoeda(valorGanhoBruto)
       document.getElementById('valorGanhoLiquido').innerText = formatarMoeda(valorGanhoLiquido)
-      document.getElementById('imposto').innerText = `${(1 - imposto).toFixed(2)}% <-> ${(1 - imposto) * valorGanhoBruto}`
+      document.getElementById('imposto').innerText = `${(1 - imposto).toFixed(2)}% <-> ${formatarMoeda((1 - imposto) * valorGanhoBruto)}`
 
       document.getElementById('valorFuturoFinal').innerText = formatarMoeda(valorFuturo)
       document.getElementById('totalAplicado').innerText = formatarMoeda(totalAplicado)
