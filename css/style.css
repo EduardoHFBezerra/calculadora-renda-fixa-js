@@ -8,7 +8,7 @@ body {
 
 .calculadora form {
     background-color: #fff;
-    max-width: 500px;
+    max-width: 850px;
     margin: auto;
     padding: 50px 70px;
     border-radius: 30px;
@@ -16,7 +16,7 @@ body {
 }
 
 .calculadora .resultado {
-    max-width: 500px;
+    max-width: 850px;
     background-color: #fff;
     margin: auto;
     margin-top: 50px;
@@ -37,12 +37,6 @@ body {
     margin: auto;
     margin-bottom: 50px;
     line-height: 100px;
-}
-
-.calculadora .item {
-    border-radius: 20px;
-    margin-bottom: 25px;
-    padding: 10px 20px;
 }
 
 .calculadora .btn-calcular {
