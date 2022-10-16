@@ -24,48 +24,63 @@
                 <div class="form-icon">
                     <i class="fas fa-calculator"></i>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputAporteInicial">Investimento inicial</label>
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-sm-3 pt-0">Tipo de investimento</legend>
+                        <div class="col-sm-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoInvestimento" id="tipoInvestimento" value="cdblc" checked>
+                                <label class="form-check-label" for="tipoInvestimento">CDB/LC</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoInvestimento" id="tipoInvestimento2" value="lcilca">
+                                <label class="form-check-label" for="tipoInvestimento2">LCI/LCA</label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="aporteInicial">Investimento inicial</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">R$</span>
                             </div>
-                            <input type="text" class="form-control" id="aporte-inicial" onKeyUp="mascararCampoMoeda(this)"
+                            <input type="text" class="form-control" id="aporteInicial" onKeyUp="mascararCampoMoeda(this)"
                                 placeholder="0,00">
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputAporteMensal">Investimento mensal</label>
+                    <div class="col-sm-6">
+                        <label for="aporteMensal">Investimento mensal</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">R$</span>
                             </div>
-                            <input type="text" class="form-control" id="aporte-mensal" onKeyUp="mascararCampoMoeda(this)"
+                            <input type="text" class="form-control" id="aporteMensal" onKeyUp="mascararCampoMoeda(this)"
                                 placeholder="0,00">
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputJurosMes">Taxa de juros ao mês</label>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="jurosMes">Taxa de juros ao mês</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">%</span>
                             </div>
-                            <input type="text" class="form-control" id="juros-mes" onKeyUp="mascararCampoJuros(this)"
+                            <input type="text" class="form-control" id="jurosMes" onKeyUp="mascararCampoJuros(this)"
                                 placeholder="0,00">
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPeriodoEm">Período em</label>
+                    <div class="col-sm-6">
+                        <label for="periodoEm">Período em</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-clock"></i></span>
                             </div>
                             <input type="number" class="form-control" id="periodo" value="1">
                             <div class="input-group-append">
-                                <select class="custom-select" id="periodo-em">
+                                <select class="custom-select" id="periodoEm">
                                   <option value="anos" selected>anos</option>
                                   <option value="meses">meses</option>
                                 </select>
@@ -73,8 +88,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-calcular" onclick="calcular();return false;">Calcular</button>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-block btn-calcular" onclick="calcular();return false;">Calcular</button>
+                    </div>
                 </div>
             </form>
             <div class="resultado">
@@ -166,11 +183,12 @@
 
             function calcular() {
 
-                const aporteInicial = moedaParaFloat(document.getElementById('aporte-inicial').value);
-                const aporteMensal = moedaParaFloat(document.getElementById('aporte-mensal').value);
-                var jurosMes = document.getElementById('juros-mes').value.replace(/,/g, '.');
+                const aporteInicial = moedaParaFloat(document.getElementById('aporteInicial').value);
+                const aporteMensal = moedaParaFloat(document.getElementById('aporteMensal').value);
+                const tipoInvestimento = document.querySelector('input[name="tipoInvestimento"]:checked').value;
+                var jurosMes = document.getElementById('jurosMes').value.replace(/,/g, '.');
                 var periodo = document.getElementById('periodo').value;
-                const periodoEm = document.getElementById('periodo-em').value;
+                const periodoEm = document.getElementById('periodoEm').value;
 
                 if (jurosMes == '') {
                     alert("Preencha a taxa de juros");
@@ -189,12 +207,12 @@
 
                 const valorGanhoBruto = valorFuturo - totalAplicado;
 
-                const imposto = calculoImpostoRenda(periodo);
-                const valorGanhoLiquido = valorGanhoBruto - (valorGanhoBruto * imposto);
+                const imposto = tipoInvestimento == "cdblc" ? calculoImpostoRenda(periodo) : 0;
+                const valorGanhoLiquido = imposto == 0 ? valorGanhoBruto : valorGanhoBruto - (valorGanhoBruto * imposto);
 
                 document.getElementById('valorGanhoBruto').innerText = formatarMoeda(valorGanhoBruto)
                 document.getElementById('valorGanhoLiquido').innerText = formatarMoeda(valorGanhoLiquido)
-                document.getElementById('imposto').innerText = `${(imposto * 100)}% <-> ${formatarMoeda(imposto * valorGanhoBruto)}`
+                document.getElementById('imposto').innerText = imposto == 0 ? "isento" : `${(imposto * 100)}% <-> ${formatarMoeda(imposto * valorGanhoBruto)}`
 
                 document.getElementById('totalBruto').innerText = formatarMoeda(valorFuturo)
                 document.getElementById('totalAplicado').innerText = formatarMoeda(totalAplicado)
